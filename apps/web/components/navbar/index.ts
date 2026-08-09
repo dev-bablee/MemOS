@@ -1,1 +1,1 @@
-﻿// Export navbar components here
+export * from "./navbar";
