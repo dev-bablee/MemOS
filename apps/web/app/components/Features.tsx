@@ -49,25 +49,16 @@ export function Features() {
             return (
               <div
                 key={i}
-                className="relative flex flex-col overflow-hidden rounded-[20px] border border-white/[0.06] bg-[#0A0A0A] p-6 sm:p-7 h-full min-h-[220px]"
+                className="relative flex flex-col overflow-hidden rounded-[20px] border border-white/[0.12] bg-[#050505] p-5 sm:p-6 h-[220px] w-full"
               >
-                {/* Subtle colored glow spreading into card background */}
-                <div
-                  className="absolute top-0 left-0 w-[200px] h-[200px] pointer-events-none -translate-x-1/4 -translate-y-1/4"
-                  style={{
-                    background: `radial-gradient(circle, ${feature.glowColor.replace('0.3', '0.12')} 0%, transparent 70%)`
-                  }}
-                />
-
                 <div className="relative z-10">
                   <div
-                    className="relative flex h-11 w-11 items-center justify-center rounded-[10px] border border-white/[0.08] bg-[#050505] shadow-sm overflow-hidden"
+                    className="relative flex h-11 w-11 items-center justify-center rounded-[10px] border border-white/[0.08] overflow-hidden"
+                    style={{
+                      backgroundColor: feature.glowColor.replace('0.3', '0.15'),
+                      boxShadow: `0 0 16px ${feature.glowColor.replace('0.3', '0.35')}, 0 0 32px ${feature.glowColor.replace('0.3', '0.12')}`
+                    }}
                   >
-                    {/* Inner stronger glow for the icon container */}
-                    <div
-                      className="absolute inset-0 opacity-20"
-                      style={{ backgroundColor: feature.glowColor }}
-                    />
                     <Icon className="relative z-10 h-5 w-5 text-white" />
                   </div>
                 </div>
@@ -76,7 +67,7 @@ export function Features() {
                   <h3 className="mb-1.5 text-[17px] font-bold text-white tracking-tight">
                     {feature.title}
                   </h3>
-                  <p className="text-[14px] font-normal leading-[1.6] text-[#A1A1AA]">
+                  <p className="text-[14px] font-medium leading-[1.6] text-[#A1A1AA]">
                     {feature.description}
                   </p>
                 </div>

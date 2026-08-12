@@ -7,6 +7,9 @@ import { Button } from "@/components/ui/button";
 import TrustedBy from "./components/TrustedBy";
 import { Features } from "./components/Features";
 import { Architecture } from "./components/Architecture";
+import { TrustedInfrastructure } from "./components/TrustedInfrastructure";
+import { CTA } from "./components/CTA";
+import { Footer } from "./components/Footer";
 
 export default function LandingPage() {
   return (
@@ -61,6 +64,9 @@ export default function LandingPage() {
         <TrustedBy />
         <Features />
         <Architecture />
+        <TrustedInfrastructure />
+        <CTA />
+        <Footer />
       </main>
     </div>
   );

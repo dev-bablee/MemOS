@@ -1,17 +1,23 @@
 import { User, ListTodo, Brain, Database, GitBranch, Server, Cpu } from "lucide-react";
 
-const wideCardStyle = "w-[320px] h-[82px] flex items-center gap-4 rounded-[16px] border border-white/[0.06] bg-[#0A0A0A] px-5 transition-all duration-300";
-const wideCardHighlightStyle = "w-[265px] h-[82px] flex items-center gap-4 rounded-[16px] border border-cyan-500/30 bg-[#0A0A0A] shadow-[0_0_30px_rgba(6,182,212,0.08)] px-5 transition-all duration-300";
-const engineCardStyle = "w-[165px] h-[125px] flex flex-col items-center justify-center gap-3 rounded-[16px] border border-white/[0.06] bg-[#0A0A0A] px-4 transition-all duration-300";
-const iconContainerStyle = "flex h-10 w-10 items-center justify-center rounded-[10px] border border-white/[0.08] bg-[#050505] shrink-0";
-const iconContainerHighlightStyle = "flex h-10 w-10 items-center justify-center rounded-[10px] border border-cyan-500/30 bg-cyan-500/10 shadow-[0_0_15px_rgba(6,182,212,0.15)] shrink-0";
-const engineIconStyle = "flex h-12 w-12 items-center justify-center rounded-[12px] border border-white/[0.08] bg-[#050505]";
+const wideCardStyle = "w-[300px] h-[76px] flex items-center gap-3 rounded-[14px] border border-white/[0.12] bg-[#050505] px-4 transition-all duration-300";
+const wideCardHighlightStyle = "w-[300px] h-[76px] flex items-center gap-3 rounded-[14px] border border-cyan-500/20 bg-[#050505] shadow-[0_0_30px_rgba(6,182,212,0.06)] px-4 transition-all duration-300";
+const engineCardStyle = "w-[150px] h-[115px] flex flex-col items-center justify-center gap-2.5 rounded-[14px] border border-white/[0.12] bg-[#050505] px-3.5 transition-all duration-300";
+const iconContainerStyle = "flex h-9 w-9 items-center justify-center rounded-[9px] border border-white/[0.06] bg-[#050505] shrink-0 relative overflow-hidden";
+const iconContainerHighlightStyle = "flex h-9 w-9 items-center justify-center rounded-[9px] border border-cyan-500/20 bg-cyan-500/5 shadow-[0_0_15px_rgba(6,182,212,0.1)] shrink-0 relative overflow-hidden";
+const engineIconStyle = "flex h-11 w-11 items-center justify-center rounded-[11px] border border-white/[0.06] bg-[#050505] relative overflow-hidden shrink-0";
 
-function WideCard({ icon: Icon, title, description, highlight = false }) {
+function WideCard({ icon: Icon, title, description, highlight = false, glowColor, className = "" }) {
+  const iconStyle = highlight ? iconContainerHighlightStyle : iconContainerStyle;
+  const glowStyle = glowColor ? {
+    backgroundColor: glowColor.replace('0.3', '0.1'),
+    boxShadow: `0 0 10px ${glowColor.replace('0.3', '0.2')}, 0 0 20px ${glowColor.replace('0.3', '0.06')}`
+  } : {};
+
   return (
-    <div className={highlight ? wideCardHighlightStyle : wideCardStyle}>
-      <div className={highlight ? iconContainerHighlightStyle : iconContainerStyle}>
-        <Icon className="h-5 w-5 text-white" />
+    <div className={`${highlight ? wideCardHighlightStyle : wideCardStyle} ${className}`}>
+      <div className={iconStyle} style={glowStyle}>
+        <Icon className="relative z-10 h-5 w-5 text-white" />
       </div>
       <div className="text-left">
         <h3 className="text-[15px] font-bold text-white tracking-tight">{title}</h3>
@@ -23,49 +29,32 @@ function WideCard({ icon: Icon, title, description, highlight = false }) {
   );
 }
 
-function EngineCard({ icon: Icon, title }) {
+function EngineCard({ icon: Icon, title, glowColor }) {
+  const glowStyle = glowColor ? {
+    backgroundColor: glowColor.replace('0.3', '0.1'),
+    boxShadow: `0 0 14px ${glowColor.replace('0.3', '0.25')}, 0 0 28px ${glowColor.replace('0.3', '0.08')}`
+  } : {};
+
   return (
     <div className={engineCardStyle}>
-      <div className={engineIconStyle}>
-        <Icon className="h-6 w-6 text-white" />
+      <div className={engineIconStyle} style={glowStyle}>
+        <Icon className="relative z-10 h-6 w-6 text-white" />
       </div>
       <h3 className="text-[14px] font-bold text-white tracking-tight text-center">{title}</h3>
     </div>
   );
 }
 
-function VerticalConnector({ showDots = true }) {
-  return (
-    <div className="flex flex-col items-center">
-      <div className="w-[1px] h-8 bg-gradient-to-b from-transparent via-cyan-500/30 to-transparent" />
-      {showDots && <div className="w-2 h-2 rounded-full bg-cyan-500/50 shadow-[0_0_8px_rgba(6,182,212,0.5)]" />}
-      <div className="w-[1px] h-8 bg-gradient-to-b from-cyan-500/30 via-transparent to-transparent" />
-    </div>
-  );
+function GapConnector() {
+  return <div className="w-[1px] h-8 bg-cyan-500/30" />;
 }
 
-function BranchConnector() {
-  return (
-    <div className="flex flex-col items-center relative">
-      <div className="w-[1px] h-6 bg-gradient-to-b from-transparent via-cyan-500/30 to-transparent" />
-      <div className="w-2 h-2 rounded-full bg-cyan-500/50 shadow-[0_0_8px_rgba(6,182,212,0.5)]" />
-      <div className="relative flex items-center gap-8 w-[280px] mt-2">
-        <div className="flex-1 h-[1px] bg-gradient-to-r from-cyan-500/30 to-transparent" />
-        <div className="flex-1 h-[1px] bg-gradient-to-l from-cyan-500/30 to-transparent" />
-      </div>
-      <div className="w-[1px] h-6 bg-gradient-to-b from-cyan-500/30 via-transparent to-transparent mt-2" />
-    </div>
-  );
+function EngineGapConnector() {
+  return <div className="w-[1px] h-6 bg-cyan-500/30" />;
 }
 
-function EngineVerticalConnector() {
-  return (
-    <div className="flex flex-col items-center mt-3">
-      <div className="w-[1px] h-6 bg-gradient-to-b from-transparent via-cyan-500/40 to-transparent" />
-      <div className="w-2 h-2 rounded-full bg-cyan-500/50 shadow-[0_0_8px_rgba(6,182,212,0.5)]" />
-      <div className="w-[1px] h-6 bg-gradient-to-b from-cyan-500/40 via-transparent to-transparent" />
-    </div>
-  );
+function LeftStackConnector() {
+  return <div className="w-[1px] h-6 bg-cyan-500/30" />;
 }
 
 export function Architecture() {
@@ -91,26 +80,31 @@ export function Architecture() {
         </p>
 
         {/* Architecture Diagram */}
-        <div className="mt-16 flex flex-col items-center">
+        <div className="mt-16 flex flex-col items-center relative">
+          {/* Left side vertical line for bottom 3 cards - continuous */}
+          <div className="absolute left-1/2 -translate-x-1/2 -left-[150px] top-[358px] h-[276px] w-[1px] bg-cyan-500/30 pointer-events-none" />
+
           {/* User Card */}
           <WideCard
             icon={User}
             title="User"
             description="Give a goal in natural language"
+            glowColor="rgba(59, 130, 246, 0.3)"
           />
 
           {/* Connector */}
-          <VerticalConnector />
+          <GapConnector />
 
           {/* Planner Card */}
           <WideCard
             icon={ListTodo}
             title="Planner"
             description="Decomposes the goal into tasks"
+            glowColor="rgba(6, 182, 212, 0.3)"
           />
 
           {/* Connector */}
-          <VerticalConnector />
+          <GapConnector />
 
           {/* MemOS Kernel Card */}
           <WideCard
@@ -118,51 +112,53 @@ export function Architecture() {
             title="MemOS Kernel"
             description="The orchestration brain"
             highlight
+            glowColor="rgba(168, 85, 247, 0.3)"
           />
 
-          {/* Branch connector to engines */}
-          <BranchConnector />
+          {/* Connector to engines */}
+          <GapConnector />
 
           {/* Engine Cards Row */}
-          <div className="flex items-start justify-center gap-4">
+          <div className="flex items-start justify-center gap-4 relative z-10">
             <div className="flex flex-col items-center">
-              <EngineCard icon={Database} title="Memory Engine" />
-              <EngineVerticalConnector />
+              <EngineCard icon={Database} title="Memory Engine" glowColor="rgba(34, 197, 94, 0.3)" />
             </div>
             <div className="flex flex-col items-center">
-              <EngineCard icon={GitBranch} title="Workflow Engine" />
-              <EngineVerticalConnector />
+              <EngineCard icon={GitBranch} title="Workflow Engine" glowColor="rgba(249, 115, 22, 0.3)" />
             </div>
           </div>
 
-          {/* Connector from engines back to center */}
-          <VerticalConnector />
+          {/* Gap after engines */}
+          <div className="h-6" />
 
           {/* CockroachDB Card */}
           <WideCard
             icon={Server}
             title="CockroachDB"
             description="Transactional + vector memory"
+            glowColor="rgba(239, 68, 68, 0.3)"
           />
 
           {/* Connector */}
-          <VerticalConnector />
+          <LeftStackConnector />
 
           {/* AWS Services Card */}
           <WideCard
             icon={Server}
             title="AWS Services"
             description="Scalable execution & storage"
+            glowColor="rgba(249, 115, 22, 0.3)"
           />
 
           {/* Connector */}
-          <VerticalConnector />
+          <LeftStackConnector />
 
           {/* AI Models Card */}
           <WideCard
             icon={Cpu}
             title="AI Models"
             description="Bedrock, OpenAI, Anthropic"
+            glowColor="rgba(168, 85, 247, 0.3)"
           />
         </div>
       </div>
