@@ -1,1 +1,1 @@
-﻿// Export sidebar components here
+export * from "./Sidebar";

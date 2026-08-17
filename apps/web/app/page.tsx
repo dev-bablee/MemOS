@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Github } from "lucide-react";
 import { Navbar } from "@/components/navbar";
@@ -42,7 +43,7 @@ export default function LandingPage() {
                 </span></span>
             </h1>
 
-            {/* Subheadline */}
+            {/* Subtitle */}
             <p className="max-w-[700px] text-lg text-white/60 sm:text-[19px] font-normal leading-relaxed mt-6">
               Give every AI agent a persistent memory, shared knowledge,
               and production-ready orchestration powered by CockroachDB.
@@ -50,12 +51,16 @@ export default function LandingPage() {
 
             {/* Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-12 w-full">
-              <Button className="bg-white text-black rounded-lg font-semibold text-[15px] h-[52px] px-8 transition-colors hover:bg-white/90">
-                Get Started <ArrowRight className="ml-1.5 h-4 w-4" />
+              <Button asChild className="bg-white text-black rounded-lg font-semibold text-[15px] h-[52px] px-8 transition-colors hover:bg-white/90">
+                <Link href="/dashboard">
+                  Get Started <ArrowRight className="ml-1.5 h-4 w-4" />
+                </Link>
               </Button>
-              <Button variant="outline" className="rounded-lg h-[52px] px-8 border border-white/[0.08] bg-white/[0.02] text-white font-medium transition-colors hover:bg-white/[0.05] hover:text-white">
-                <Github className="mr-2 h-5 w-5" />
-                View GitHub
+              <Button asChild variant="outline" className="rounded-lg h-[52px] px-8 border border-white/[0.08] bg-white/[0.02] text-white font-medium transition-colors hover:bg-white/[0.05] hover:text-white">
+                <a href="https://github.com/dev-bablee/MemOS" target="_blank" rel="noopener noreferrer">
+                  <Github className="mr-2 h-5 w-5" />
+                  View GitHub
+                </a>
               </Button>
             </div>
           </motion.div>

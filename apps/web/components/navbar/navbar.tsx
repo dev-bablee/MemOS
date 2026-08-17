@@ -32,10 +32,10 @@ export function Navbar() {
           <div className="flex items-center gap-4">
             <div className="hidden sm:flex items-center gap-4">
               <Button variant="ghost" className="text-[13px] font-medium text-white/70 hover:text-white hover:bg-transparent px-2" asChild>
-                <Link href="/sign-in">Sign in</Link>
+                <Link href="/login">Sign in</Link>
               </Button>
               <Button className="bg-white text-black hover:bg-white/90 rounded-full font-semibold text-[13px] h-8 px-4" asChild>
-                <Link href="/get-started">Get Started</Link>
+                <Link href="/signup">Get Started</Link>
               </Button>
             </div>
             

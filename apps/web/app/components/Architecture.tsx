@@ -1,4 +1,5 @@
 import { User, ListTodo, Brain, Database, GitBranch, Server, Cpu } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 const wideCardStyle = "w-[300px] h-[76px] flex items-center gap-3 rounded-[14px] border border-white/[0.12] bg-[#050505] px-4 transition-all duration-300";
 const wideCardHighlightStyle = "w-[300px] h-[76px] flex items-center gap-3 rounded-[14px] border border-cyan-500/20 bg-[#050505] shadow-[0_0_30px_rgba(6,182,212,0.06)] px-4 transition-all duration-300";
@@ -7,7 +8,22 @@ const iconContainerStyle = "flex h-9 w-9 items-center justify-center rounded-[9p
 const iconContainerHighlightStyle = "flex h-9 w-9 items-center justify-center rounded-[9px] border border-cyan-500/20 bg-cyan-500/5 shadow-[0_0_15px_rgba(6,182,212,0.1)] shrink-0 relative overflow-hidden";
 const engineIconStyle = "flex h-11 w-11 items-center justify-center rounded-[11px] border border-white/[0.06] bg-[#050505] relative overflow-hidden shrink-0";
 
-function WideCard({ icon: Icon, title, description, highlight = false, glowColor, className = "" }) {
+interface WideCardProps {
+  icon: LucideIcon;
+  title: string;
+  description?: string;
+  highlight?: boolean;
+  glowColor?: string;
+  className?: string;
+}
+
+interface EngineCardProps {
+  icon: LucideIcon;
+  title: string;
+  glowColor?: string;
+}
+
+function WideCard({ icon: Icon, title, description, highlight = false, glowColor, className = "" }: WideCardProps) {
   const iconStyle = highlight ? iconContainerHighlightStyle : iconContainerStyle;
   const glowStyle = glowColor ? {
     backgroundColor: glowColor.replace('0.3', '0.1'),
@@ -29,7 +45,7 @@ function WideCard({ icon: Icon, title, description, highlight = false, glowColor
   );
 }
 
-function EngineCard({ icon: Icon, title, glowColor }) {
+function EngineCard({ icon: Icon, title, glowColor }: EngineCardProps) {
   const glowStyle = glowColor ? {
     backgroundColor: glowColor.replace('0.3', '0.1'),
     boxShadow: `0 0 14px ${glowColor.replace('0.3', '0.25')}, 0 0 28px ${glowColor.replace('0.3', '0.08')}`
@@ -47,10 +63,6 @@ function EngineCard({ icon: Icon, title, glowColor }) {
 
 function GapConnector() {
   return <div className="w-[1px] h-8 bg-cyan-500/30" />;
-}
-
-function EngineGapConnector() {
-  return <div className="w-[1px] h-6 bg-cyan-500/30" />;
 }
 
 function LeftStackConnector() {
